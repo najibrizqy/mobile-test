@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const btnTop = {
+const btnTop: any = {
     marginLeft: 'auto',
     backgroundColor: '#9DEFF2',
     borderWidth: 1,
@@ -12,6 +12,10 @@ const btnTop = {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF'
+    },
+    loadingContainer: {
         flex: 1,
         backgroundColor: '#FFFFFF'
     },
@@ -32,7 +36,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         borderColor: '#BBBBBB',
-        marginBottom: 20
+        marginBottom: 20,
+        marginHorizontal: 20
     },
     cardHeader: {
         flexDirection: 'row',

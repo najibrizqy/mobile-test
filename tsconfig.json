@@ -4,6 +4,9 @@
     "module": "es2015",
     "moduleResolution": "node",
   },
+  "include": [
+    "tsx"
+  ],
   "exclude": [
     "node_modules"
   ]
