@@ -7,7 +7,7 @@ interface JokeFlags {
     explicit: boolean;
 }
 
-interface Joke {
+export interface Joke {
     category: string;
     type: string;
     joke: string;
@@ -15,12 +15,6 @@ interface Joke {
     id: number;
     safe: boolean;
     lang: string;
-}
-
-interface JokeResponse {
-    error: boolean;
-    amount: number;
-    jokes: Joke[];
 }
 
 interface CategoriesResponse {
@@ -46,13 +40,29 @@ export const getJokeCategories = async (): Promise<string[]> => {
     }
 };
 
-export const getJokes = async (category: string = 'Pun', amount: number = 2): Promise<Joke[]> => {
+export interface JokeError {
+    error: boolean;
+    message: string;
+    causedBy?: string[];
+}
+
+export const getJokes = async (category: string = 'Pun', amount: number = 2): Promise<Joke[] | JokeError> => {
     try {
         const response = await fetch(`${BASE_URL}/joke/${category}?type=single&amount=${amount}`);
-        const data: JokeResponse = await response.json();
+        const data = await response.json();
+        if (data.error) {
+            return {
+                error: true,
+                message: data.message || 'No matching joke found',
+                causedBy: data.causedBy,
+            };
+        }
         return data.jokes;
     } catch (error) {
         console.error('Error fetching jokes:', error);
-        return [];
+        return {
+            error: true,
+            message: 'Failed to fetch jokes',
+        };
     }
 };
